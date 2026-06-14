@@ -11,6 +11,18 @@
 </head>
 <body>
 
+  <!-- TOOLTIP GLOBAL -->
+  <div class="tip-popup" id="tipPopup"></div>
+
+  <!-- COUNTDOWN WIDGET -->
+  <div class="countdown-widget" id="countdownWidget">
+    <div class="cd-label">entrega</div>
+    <div class="cd-days" id="cdDays">—</div>
+    <div class="cd-sublabel">días</div>
+    <div class="cd-bar-track"><div class="cd-bar-fill" id="cdBar"></div></div>
+    <div class="cd-date">15 ago 2026</div>
+  </div>
+
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
@@ -26,10 +38,12 @@
           <button class="lang-btn" data-lang="en">EN</button>
         </div>
         <div class="legend">
-          <span class="badge badge-belen">🧞‍♀️ Belén</span>
-          <span class="badge badge-filippo">🧞 Filippo</span>
-          <span class="badge badge-together">✦ Juntos</span>
+          <button class="badge badge-belen filter-btn active" data-filter="belen">🧞‍♀️ Belén</button>
+          <button class="badge badge-filippo filter-btn active" data-filter="filippo">🧞 Filippo</button>
+          <button class="badge badge-together filter-btn active" data-filter="together">💕 Juntos</button>
+          <button class="badge badge-unassigned filter-btn active" data-filter="unassigned">✪ Sin asignar</button>
         </div>
+        <button class="copy-btn" id="copyBtn" title="Copiar al portapapeles">Copiar</button>
       </div>
 
       <!-- PROGRESS GLOBAL -->
@@ -47,7 +61,9 @@
 
   <main class="main-content">
 
-    <!-- SECTION 1 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 1 · PAPELES                     -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="papeles">
       <div class="section-header" onclick="toggleSection('papeles')">
         <div class="section-meta">
@@ -58,9 +74,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-papeles"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-papeles"></div></div>
           <span class="mini-pct" id="pct-papeles">0%</span>
           <span class="chevron" id="chev-papeles">↓</span>
         </div>
@@ -69,102 +83,128 @@
 
         <div class="subsection-label" data-i18n="s1sub1">Contrato de compra</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_revisar_contrato">Revisar la versión final del contrato / koopovereenkomst.</span>
+            <span class="task-text" data-i18n="t_revisar_contrato">Revisar la versión final del contrato / <span class="tip" data-tip="koopovereenkomst">koopovereenkomst</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_confirmar_fecha">Confirmar que la fecha estimada de entrega sea alrededor del 15 de agosto de 2026.</span>
+            <span class="task-text" data-i18n="t_confirmar_fecha">Confirmar que la fecha estimada de entrega (<span class="tip" data-tip="overdracht">overdracht</span>) sea alrededor del 15 de agosto de 2026.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_financing_condition">Revisar que la financing condition refleje la financiación real: ~€630.000 + bouwdepot €30.000.</span>
+            <span class="task-text" data-i18n="t_financing_condition">Revisar que la <span class="tip" data-tip="financing_condition">financing condition</span> refleje la financiación real: ~€630.000 + <span class="tip" data-tip="bouwdepot">bouwdepot</span> €30.000.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_clausulas">Revisar cláusulas clave: non-self-occupancy, age clause, asbestos, foundation waiver, owner-occupancy, resale restriction, fire-rated ceiling, splitsingstekening.</span>
+            <span class="task-text" data-i18n="t_clausulas">Revisar cláusulas clave: <span class="tip" data-tip="non_self_occupancy">non-self-occupancy</span>, <span class="tip" data-tip="age_clause">age clause</span>, <span class="tip" data-tip="asbestos_clause">asbestos clause</span>, <span class="tip" data-tip="foundation_waiver">foundation waiver</span>, <span class="tip" data-tip="resale_restriction">resale restriction</span>, <span class="tip" data-tip="fire_rated_ceiling">fire-rated ceiling</span>, <span class="tip" data-tip="splitsingstekening">splitsingstekening</span>.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="papeles" />
+            <span class="task-text" data-i18n="t_eigenbewoning">Confirmar condición de <span class="tip" data-tip="eigenbewoning">eigenbewoning</span> (ocupación propia) requerida para la hipoteca.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s1sub2">Notario</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_source_funds">Completar source of funds form y PEP statement.</span>
+            <span class="task-text" data-i18n="t_source_funds">Completar <span class="tip" data-tip="source_of_funds">source of funds form</span> y <span class="tip" data-tip="pep_statement">PEP statement</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_embajador">Preguntar en privado al notario sobre el caso del tío embajador (WWFT/KYC).</span>
+            <span class="task-text" data-i18n="t_embajador">Preguntar en privado al notario sobre el caso del tío embajador (<span class="tip" data-tip="wwft">WWFT</span>/<span class="tip" data-tip="kyc">KYC</span>).</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_firma_notario">Confirmar documentos a firmar, monto a transferir y nota van afrekening antes de la transferencia.</span>
+            <span class="task-text" data-i18n="t_firma_notario">Confirmar documentos a firmar, monto a transferir y <span class="tip" data-tip="nota_afrekening">nota van afrekening</span> antes de la transferencia.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_erfpacht">Confirmar erfpacht: canon prepaid hasta 31 dic 2059 y posibles costes por cambio de uso.</span>
+            <span class="task-text" data-i18n="t_aktenpassage">Confirmar fecha y hora exacta del <span class="tip" data-tip="aktenpassage">aktenpassage</span> (firma de escrituras en notaría).</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="papeles" />
+            <span class="task-text" data-i18n="t_erfpacht">Confirmar <span class="tip" data-tip="erfpacht">erfpacht</span>: canon prepaid hasta 31 dic 2059 y posibles costes por cambio de uso.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s1sub3">VvE y documentos legales</div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_vve_costes">Pedir confirmación escrita de VvE sobre costes del proyecto de sostenibilidad / verduurzaming, préstamo colectivo, derrama y cuota mensual.</span>
+            <span class="task-text" data-i18n="t_vve_costes">Pedir confirmación escrita de <span class="tip" data-tip="vve">VvE</span> sobre costes del proyecto de sostenibilidad / <span class="tip" data-tip="verduurzaming">verduurzaming</span>, préstamo colectivo, <span class="tip" data-tip="derrama">derrama</span> y cuota mensual.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
-            <span class="task-text" data-i18n="t_vve_reserve">Pedir estado actualizado del reserve fund y confirmación del share del vendedor.</span>
+            <span class="task-text" data-i18n="t_vve_reserve">Pedir estado actualizado del <span class="tip" data-tip="reserve_fund">reserve fund</span> y confirmación del share del vendedor.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="papeles" />
             <span class="task-text" data-i18n="t_vve_normas">Confirmar normas exactas de suelo acústico, permisos para obras, horarios, ruido y uso de escalera.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="papeles" />
+            <span class="task-text" data-i18n="t_vve_reglement">Pedir copia del <span class="tip" data-tip="splitsingsreglement">splitsingsreglement</span> y <span class="tip" data-tip="huishoudelijk_reglement">huishoudelijk reglement</span> completos.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- SECTION 2 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 2 · FINANCIERO                  -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="financiero">
       <div class="section-header" onclick="toggleSection('financiero')">
         <div class="section-meta">
@@ -175,9 +215,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-financiero"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-financiero"></div></div>
           <span class="mini-pct" id="pct-financiero">0%</span>
           <span class="chevron" id="chev-financiero">↓</span>
         </div>
@@ -186,80 +224,106 @@
 
         <div class="subsection-label" data-i18n="s2sub1">Hipoteca</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
-            <span class="task-text" data-i18n="t_monto_hipoteca">Confirmar con Edwin monto objetivo: ~€630.000 + €30.000 bouwdepot y mejores condiciones bancarias.</span>
+            <span class="task-text" data-i18n="t_monto_hipoteca">Confirmar con Edwin monto objetivo: ~€630.000 + €30.000 <span class="tip" data-tip="bouwdepot">bouwdepot</span> y mejores condiciones bancarias.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
             <span class="task-text" data-i18n="t_simulaciones">Revisar simulaciones con y sin bouwdepot: tipo de interés, cuota mensual, duración fija.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
-            <span class="task-text" data-i18n="t_bouwdepot">Confirmar qué obras cubre el bouwdepot: suelo, cocina, electricidad, pladur acústico, baño, mejoras energéticas.</span>
+            <span class="task-text" data-i18n="t_periodo_fijo">Decidir duración del período fijo de la hipoteca (10, 20 o 30 años) y comparar ofertas.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="financiero" />
+            <span class="task-text" data-i18n="t_bouwdepot">Confirmar qué obras cubre el <span class="tip" data-tip="bouwdepot">bouwdepot</span>: suelo, cocina, electricidad, pladur acústico, baño, mejoras energéticas.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="financiero" />
+            <span class="task-text" data-i18n="t_waiver_deadline">Confirmar fecha límite para el <span class="tip" data-tip="waiver">waiver</span> de la financing condition con Edwin.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s2sub2">Taxatie y bank guarantee</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
-            <span class="task-text" data-i18n="t_taxatie">Confirmar que la taxatie considere valor post-reforma si hay bouwdepot. Preparar lista de obras justificadas.</span>
+            <span class="task-text" data-i18n="t_taxatie">Confirmar que la <span class="tip" data-tip="taxatie">taxatie</span> considere valor post-reforma si hay bouwdepot. Preparar lista de obras justificadas.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
-            <span class="task-text" data-i18n="t_bank_guarantee">Confirmar deadline, monto (10% del precio), coste y coordinación de la bank guarantee con notario.</span>
+            <span class="task-text" data-i18n="t_bank_guarantee">Confirmar deadline, monto (10% del precio), coste y coordinación de la <span class="tip" data-tip="bank_guarantee">bank guarantee</span> con notario.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s2sub3">Seguro de vida</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
             <span class="task-text" data-i18n="t_seguro_vida">Revisar oferta TAF (€300k/€400k/€500k) y decidir cobertura. Confirmar condiciones, cancelación y cuestionario médico.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s2sub4">Presupuesto total</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="financiero" />
+            <span class="task-text" data-i18n="t_spreadsheet">Crear spreadsheet compartida con todos los costos: compra, reforma, muebles y gastos recurrentes.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
             <span class="task-text" data-i18n="t_presupuesto_compra">Armar presupuesto completo de compra: precio, notario, taxatie, advisor, bank guarantee, mudanza, renovación, muebles, buffer.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="financiero" />
             <span class="task-text" data-i18n="t_presupuesto_fases">Armar presupuesto de obras por fases: antes de mudanza / 3 meses / 1 año / 4-5 años / largo plazo.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- SECTION 3 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 3 · TÉCNICO                     -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="tecnico">
       <div class="section-header" onclick="toggleSection('tecnico')">
         <div class="section-meta">
@@ -270,9 +334,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-tecnico"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-tecnico"></div></div>
           <span class="mini-pct" id="pct-tecnico">0%</span>
           <span class="chevron" id="chev-tecnico">↓</span>
         </div>
@@ -281,72 +343,100 @@
 
         <div class="subsection-label" data-i18n="s3sub1">Informe técnico</div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
             <span class="task-text" data-i18n="t_informe_guardar">Guardar informe técnico final y compartirlo con Edwin y contratistas relevantes.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
             <span class="task-text" data-i18n="t_informe_revision">Revisar con Edwin si algo del informe justifica pedir reparación o compensación al vendedor.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s3sub2">Reparaciones a pedir al vendedor</div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
-            <span class="task-text" data-i18n="t_boiler_factura">Pedir factura reciente de mantenimiento de boiler antes de la transferencia.</span>
+            <span class="task-text" data-i18n="t_boiler_factura">Pedir factura reciente de mantenimiento de <span class="tip" data-tip="boiler">boiler</span> antes de la transferencia.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
             <span class="task-text" data-i18n="t_reparaciones_ducha">Pedir reparación de juntas/sellado y baldosa rota de ducha, o compensación de €650.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s3sub3">Final inspection</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
-            <span class="task-text" data-i18n="t_final_inspection">Revisar boiler, calefacción, agua, electricidad, ventanas, baño, medidores, llaves. Sacar fotos y videos. Confirmar que la casa esté vacía.</span>
+            <span class="task-text" data-i18n="t_final_inspection">Revisar <span class="tip" data-tip="boiler">boiler</span>, calefacción, agua, electricidad, ventanas, baño, medidores, llaves. Sacar fotos y videos. Confirmar que la casa esté vacía.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="subsection-label" data-i18n="s3sub4">Seguridad básica</div>
-
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
-            <span class="task-text" data-i18n="t_detectores">Comprar e instalar detectores de humo en cada planta y CO detector cerca del boiler.</span>
+            <span class="task-text" data-i18n="t_medidores">Tomar lectura exacta de medidores (<span class="tip" data-tip="meterstanden">meterstanden</span>: gas, luz, agua) el día de entrega y fotografiarlos.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="subsection-label" data-i18n="s3sub4">Ventilación mecánica</div>
+
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="tecnico" />
-            <span class="task-text" data-i18n="t_cerraduras">Revisar y cambiar cilindros de cerraduras si hace falta.</span>
+            <span class="task-text" data-i18n="t_ventilacion_checkup">Revisar el estado del sistema de <span class="tip" data-tip="mechanische_ventilatie">ventilación mecánica</span> (baño, toilet y cocina): filtros, flujo de aire, ruidos y fecha de último servicio.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="tecnico" />
+            <span class="task-text" data-i18n="t_ventilacion_manual">Pedir al vendedor el manual y marca del sistema de ventilación mecánica.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="subsection-label" data-i18n="s3sub5">Seguridad básica</div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="tecnico" />
+            <span class="task-text" data-i18n="t_detectores">Comprar e instalar detectores de humo en cada planta y <span class="tip" data-tip="co_detector">CO detector</span> cerca del boiler.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="tecnico" />
+            <span class="task-text" data-i18n="t_cerraduras">Revisar y cambiar <span class="tip" data-tip="cilinderslot">cilindros de cerradura</span> si hace falta.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- SECTION 4 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 4 · REMODELACIÓN                -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="remodelacion">
       <div class="section-header" onclick="toggleSection('remodelacion')">
         <div class="section-meta">
@@ -357,9 +447,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-remodelacion"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-remodelacion"></div></div>
           <span class="mini-pct" id="pct-remodelacion">0%</span>
           <span class="chevron" id="chev-remodelacion">↓</span>
         </div>
@@ -368,158 +456,202 @@
 
         <div class="subsection-label" data-i18n="s4sub1">Estrategia general</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_estrategia">Definir qué se hace antes de mudanza (suelo beneden, cocina, pintura, seguridad) y qué puede esperar.</span>
+            <span class="task-text" data-i18n="t_estrategia">Definir qué se hace antes de mudanza (suelo <span class="tip" data-tip="beneden">beneden</span>, cocina, pintura, seguridad) y qué puede esperar.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="remodelacion" />
+            <span class="task-text" data-i18n="t_cronograma">Hacer cronograma de obras con fechas y dependencias (suelo antes de pintura, cocina antes de mudanza, etc.).</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s4sub2">Suelo beneden (~55 m²)</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_suelo_medidas">Confirmar medidas exactas de woonkamer, oficina beneden y hal. Verificar si el suelo está vlak en egaal.</span>
+            <span class="task-text" data-i18n="t_suelo_medidas">Confirmar medidas exactas de <span class="tip" data-tip="woonkamer">woonkamer</span>, oficina beneden y <span class="tip" data-tip="hal">hal</span>. Verificar si el suelo está <span class="tip" data-tip="vlak_egaal">vlak en egaal</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_suelo_vve">Confirmar norma VvE de acústica exacta (dB/ΔLlin/ΔLw) y si el sistema debe aprobarse antes de instalar.</span>
+            <span class="task-text" data-i18n="t_suelo_vve">Confirmar norma <span class="tip" data-tip="vve">VvE</span> de acústica exacta (<span class="tip" data-tip="akoestiek_norm">dB/ΔLlin/ΔLw</span>) y si el sistema debe aprobarse antes de instalar.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_suelo_presupuestos">Pedir presupuestos para subestructura: Fermacell, corcho acústico, underlay tipo Firstfloor Goldline. Comparar altura, precio, plazo.</span>
+            <span class="task-text" data-i18n="t_suelo_presupuestos">Pedir presupuestos para subestructura: <span class="tip" data-tip="fermacell">Fermacell</span>, corcho acústico, <span class="tip" data-tip="underlay">underlay</span> tipo Firstfloor Goldline. Comparar altura, precio, plazo.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_suelo_showroom">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_suelo_pinterest_desc">buscar inspiración de color y acabado de suelo (roble claro, multiplank, visgraat, tono cálido no gris)</span>. Visitar showrooms en Amsterdam.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_suelo_showroom">buscar inspiración de color y acabado de suelo (roble claro, <span class="tip" data-tip="multiplank">multiplank</span>, <span class="tip" data-tip="visgraat">visgraat</span>, tono cálido no gris)</span>. Visitar showrooms en Amsterdam.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_suelo_muestras">Pedir muestras grandes para ver con luz real en la casa. Confirmar misma partida (zelfde batchnummer) para 55 m².</span>
+            <span class="task-text" data-i18n="t_suelo_muestras">Pedir muestras grandes para ver con luz real en la casa. Confirmar misma partida (<span class="tip" data-tip="batchnummer">zelfde batchnummer</span>) para 55 m².</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s4sub3">Suelo de cocina</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_cocina_azulejo_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_cocina_pinterest_desc">buscar azulejos off-white, ivory, limestone look, travertine, marmerlook cálido (60x60 / 60x120)</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_cocina_azulejo_ref">buscar azulejos off-white, ivory, limestone look, travertine, <span class="tip" data-tip="marmerlook">marmerlook</span> cálido (60x60 / 60x120)</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_cocina_azulejo_tienda">Ver azulejos en vivo. Confirmar mismo tono y calibre. Coordinar transición con suelo de woonkamer.</span>
+            <span class="task-text" data-i18n="t_cocina_azulejo_tienda">Ver azulejos en vivo. Confirmar mismo tono y calibre. Coordinar transición con suelo de <span class="tip" data-tip="woonkamer">woonkamer</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="subsection-label" data-i18n="s4sub4">Cocina</div>
+        <div class="subsection-label" data-i18n="s4sub4">Cocina — IKEA</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_cocina_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_cocina_ref_desc">buscar cocinas IKEA METOD off-white/shaker, backsplash verde menta/sage, electrodomésticos integrados</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_cocina_ref">buscar cocinas IKEA <span class="tip" data-tip="metod">METOD</span> off-white/shaker, <span class="tip" data-tip="backsplash">backsplash</span> verde menta/sage, electrodomésticos integrados</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_cocina_medidas">Subir fotos y medidas: largo, ancho, altura, ventana, puerta balcón, agua/gas/ventilación. Diseñar cocina IKEA METOD.</span>
+            <span class="task-text" data-i18n="t_cocina_medidas">Subir fotos y medidas a IKEA: largo, ancho, altura, ventana, puerta <span class="tip" data-tip="balkon">balkon</span>, puntos de agua/gas/<span class="tip" data-tip="ventilatie">ventilación</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_cocina_electro">Confirmar que la instalación eléctrica single-phase alcanza para inducción, horno, lavavajillas. Decidir electrodomésticos.</span>
+            <span class="task-text" data-i18n="t_ikea_cita"><span class="icon-date">◈</span> <strong>Cita IKEA online: 1 de julio.</strong> Preparar al menos 2 diseños alternativos de cocina IKEA METOD antes de la cita.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="remodelacion" />
+            <span class="task-text" data-i18n="t_cocina_enchufes">Planificar reubicación de enchufes y puntos de agua/desagüe según diseño de cocina. Coordinar con electricista y fontanero.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="remodelacion" />
+            <span class="task-text" data-i18n="t_cocina_electro">Confirmar que la instalación eléctrica <span class="tip" data-tip="single_phase">single-phase</span> alcanza para inducción, horno, lavavajillas simultáneamente. Decidir electrodomésticos.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="remodelacion" />
+            <span class="task-text" data-i18n="t_cocina_gas">Coordinar instalación de gas con contratista certificado antes de montar muebles IKEA. Confirmar presión y tipo de conexión.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
             <span class="task-text" data-i18n="t_cocina_presupuesto">Pedir presupuesto IKEA y de instalación. Confirmar disponibilidad, plazos y garantías.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="subsection-label" data-i18n="s4sub5">Baño actual</div>
+        <div class="subsection-label" data-i18n="s4sub5">Baño de arriba</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_banio_reparaciones">Reparar juntas/sellado ducha y baldosa rota. Mejorar ventilación. Cambiar espejo, luz y accesorios si es barato.</span>
+            <span class="task-text" data-i18n="t_banio_reparaciones">Reparar juntas/sellado ducha y baldosa rota. Mejorar ventilación. Cambiar espejo, luz y accesorios si es barato. <em>(No se renueva ahora.)</em></span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="subsection-label" data-i18n="s4sub5b">Baño / toilet de abajo</div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="remodelacion" />
+            <span class="task-text" data-i18n="t_banio_abajo">Evaluar si pintar o empapelar el baño/toilet de abajo. Buscar referencias de estilo. Presupuestar.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s4sub6">Pared acústica / Oficina 2</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_pared_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_pared_ref_desc">buscar separaciones con pladur acústico, puertas sólidas y high glass / transom en livingrooms</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_pared_ref">buscar separaciones con <span class="tip" data-tip="pladur">pladur</span> acústico, puertas sólidas y <span class="tip" data-tip="high_glass">high glass / transom</span> en livingrooms</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_pared_vve">Consultar VvE si se requiere permiso para pared de pladur. Pedir presupuesto: metal studs + mineral wool + doble placa.</span>
+            <span class="task-text" data-i18n="t_pared_vve">Consultar <span class="tip" data-tip="vve">VvE</span> si se requiere permiso para pared de <span class="tip" data-tip="pladur">pladur</span>. Pedir presupuesto: <span class="tip" data-tip="metal_studs">metal studs</span> + mineral wool + doble placa.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s4sub7">Pintura</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_pintura_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_pintura_ref_desc">buscar interiores en warm white / ivory / off-white con luz natural cálida</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_pintura_ref">buscar interiores en warm white / ivory / off-white con luz natural cálida</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="remodelacion" />
-            <span class="task-text" data-i18n="t_pintura_mateo">Pedir presupuesto a Mateo. Confirmar si se pinta antes o después del suelo y cómo protegerlo.</span>
+            <span class="task-text" data-i18n="t_pintura_mateo">Pedir presupuesto a Mateo. Confirmar si se pinta antes o después del suelo y cómo protegerlo. Decidir si se pintan también techos y marcos.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- SECTION 5 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 5 · MUEBLES                     -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="muebles">
       <div class="section-header" onclick="toggleSection('muebles')">
         <div class="section-meta">
@@ -530,9 +662,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-muebles"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-muebles"></div></div>
           <span class="mini-pct" id="pct-muebles">0%</span>
           <span class="chevron" id="chev-muebles">↓</span>
         </div>
@@ -541,72 +671,116 @@
 
         <div class="subsection-label" data-i18n="s5sub1">Dormitorio principal</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
-            <span class="task-text" data-i18n="t_dormitorio_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_dorm_pinterest_desc">buscar dormitorios-santuario con telas, luces cálidas, cortinas de techo, estilo quiet luxury</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_dormitorio_ref">buscar dormitorios-santuario con telas, luces cálidas, cortinas de techo, estilo quiet luxury</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
-            <span class="task-text" data-i18n="t_dormitorio_cama">Planificar cama 160 cm (IKEA Mandal u otra con storage). Medir y diseñar walk-in closet.</span>
+            <span class="task-text" data-i18n="t_dormitorio_medidas">Tomar medidas exactas del dormitorio y hacer un plano básico. El cuarto está vacío — todo por definir.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="muebles" />
+            <span class="task-text" data-i18n="t_dormitorio_cama">Planificar cama 160 cm (IKEA Mandal u otra con storage). Definir posición, cabecero, mesitas y iluminación.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="muebles" />
+            <span class="task-text" data-i18n="t_dormitorio_armario">Confirmar si el armario existente se queda o se retira. Medir espacio para <span class="tip" data-tip="inloopkast">inloopkast</span> (walk-in closet).</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="muebles" />
+            <span class="task-text" data-i18n="t_dormitorio_cortinas">Planificar cortinas: tipo (blackout, lino, terciopelo), rieles y altura desde el techo.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s5sub2">Living</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
-            <span class="task-text" data-i18n="t_living_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_living_pinterest_desc">buscar livings estilo 1920s Balanced Cozy / Quiet Luxury con proyector, plantas y alfombra azul/malva</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_living_ref">buscar livings estilo 1920s Balanced Cozy / Quiet Luxury con proyector, plantas y alfombra azul/malva</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
-            <span class="task-text" data-i18n="t_living_layout">Ubicar IKEA LANDSKRONA verde claro y alfombra azul/turquesa/malva. Definir zona proyector, lámparas y plantas.</span>
+            <span class="task-text" data-i18n="t_living_layout">Ubicar IKEA <span class="tip" data-tip="landskrona">LANDSKRONA</span> verde claro y alfombra azul/turquesa/malva. Definir zona proyector, lámparas y plantas.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="subsection-label" data-i18n="s5sub3">Oficina beneden</div>
+        <div class="subsection-label" data-i18n="s5sub3">Oficina beneden (slaapkamer 1)</div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
             <span class="task-text" data-i18n="t_oficina_layout">Ubicar escritorio sit-stand de Filippo. Alfombra Anders en oficina. Definir storage cerrado e iluminación de trabajo.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="muebles" />
+            <span class="task-text" data-i18n="t_oficina_ethernet">Llevar cable <span class="tip" data-tip="ethernet">ethernet</span> a la oficina 1 (<span class="tip" data-tip="slaapkamer">slaapkamer</span> de abajo). Confirmar punto de entrada del router y recorrido del cable.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s5sub4">Entrada / hal</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
-            <span class="task-text" data-i18n="t_entrada_ref">🎨 <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_entrada_pinterest_desc">buscar entradas estrechas con zapatero de madera/vintage, perchero, espejo y bandeja de llaves</span>.</span>
+            <span class="task-text"><span class="icon-paint">◆</span> <strong data-i18n="pinterest">Referencias Pinterest:</strong> <span data-i18n="t_entrada_ref">buscar entradas estrechas con zapatero de madera/vintage, perchero, espejo y bandeja de llaves</span>.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="muebles" />
             <span class="task-text" data-i18n="t_entrada_zapatero">Buscar zapatero estrecho, cálido, de madera o vintage. Medir profundidad junto al radiador.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="subsection-label" data-i18n="s5sub5">Balcón</div>
+
+        <div class="task-item task-item--reminder" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="muebles" />
+            <span class="task-text" data-i18n="t_balcon_storage"><span class="icon-note">▣</span> <strong>Recordatorio:</strong> Existe storage en el balcón — se puede usar para guardar cosas sin lugar definitivo (herramientas, cajas, temporada).</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>
     </section>
 
-    <!-- SECTION 6 -->
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 6 · MUDANZA                     -->
+    <!-- ═══════════════════════════════════════ -->
     <section class="task-section" data-section="mudanza">
       <div class="section-header" onclick="toggleSection('mudanza')">
         <div class="section-meta">
@@ -617,9 +791,7 @@
           </div>
         </div>
         <div class="section-right">
-          <div class="mini-progress">
-            <div class="mini-bar-fill" id="bar-mudanza"></div>
-          </div>
+          <div class="mini-progress"><div class="mini-bar-fill" id="bar-mudanza"></div></div>
           <span class="mini-pct" id="pct-mudanza">0%</span>
           <span class="chevron" id="chev-mudanza">↓</span>
         </div>
@@ -628,64 +800,80 @@
 
         <div class="subsection-label" data-i18n="s6sub1">Marnixkade</div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
             <span class="task-text" data-i18n="t_marnixkade">Confirmar fecha hasta la que conservamos el cuarto. Decidir si mantenerlo algunas semanas durante las obras. Planear ritual de cierre.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="mudanza" />
+            <span class="task-text" data-i18n="t_marnixkade_muebles">Decidir qué muebles y cosas de Marnixkade se llevan a Zaanstraat, qué se dona y qué se vende.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s6sub2">Mudanza</div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
             <span class="task-text" data-i18n="t_movers">Pedir presupuestos de movers. Confirmar lift, escalera y permisos de estacionamiento.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
             <span class="task-text" data-i18n="t_caja_primera_noche">Preparar caja de primera noche: sábanas, toallas, cargadores, medicinas, documentos, café/té, herramientas básicas, detector CO/humo.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
             <span class="task-text" data-i18n="t_coordinar_mudanza">Coordinar fecha de mudanza con instalación de suelo y cocina. Empacar por zonas y etiquetar cajas.</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
         <div class="subsection-label" data-i18n="s6sub3">Registro y administración</div>
 
-        <div class="task-item" data-owner="together">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
-            <span class="task-text" data-i18n="t_registro">Registrarse en la nueva dirección en gemeente dentro del plazo contractual.</span>
+            <span class="task-text" data-i18n="t_registro"><span class="icon-warn">!</span> Registrarse en la nueva dirección en <span class="tip" data-tip="gemeente">gemeente</span> <strong>antes del 15 de noviembre de 2026</strong> (3 meses desde la firma del 15 ago).</span>
           </label>
-          <span class="owner-badge" title="Juntos">✦</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="filippo">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
             <span class="task-text" data-i18n="t_cambio_direccion">Cambiar dirección en banco, trabajo, seguros, médico/farmacia. Contratar energía, internet y agua.</span>
           </label>
-          <span class="owner-badge" title="Filippo">🧞</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
-        <div class="task-item" data-owner="belen">
+        <div class="task-item" data-owner="unassigned">
           <label class="task-label">
             <input type="checkbox" class="task-check" data-section="mudanza" />
-            <span class="task-text" data-i18n="t_documentos_digitales">Guardar todos los documentos digitales en carpeta organizada. Confirmar contactos VvE.</span>
+            <span class="task-text" data-i18n="t_digid">Confirmar plazos para actualizar <span class="tip" data-tip="digid">DigiD</span> / <span class="tip" data-tip="bsn">BSN</span> tras el cambio de domicilio.</span>
           </label>
-          <span class="owner-badge" title="Belén">🧞‍♀️</span>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
+        </div>
+
+        <div class="task-item" data-owner="unassigned">
+          <label class="task-label">
+            <input type="checkbox" class="task-check" data-section="mudanza" />
+            <span class="task-text" data-i18n="t_documentos_digitales">Guardar todos los documentos digitales en carpeta organizada. Confirmar contactos <span class="tip" data-tip="vve">VvE</span>.</span>
+          </label>
+          <div class="owner-wrap"><button class="owner-badge" title="Sin asignar">✪</button><div class="owner-dropdown"><button class="drop-opt" data-owner-val="belen">🧞‍♀️</button><button class="drop-opt" data-owner-val="filippo">🧞</button><button class="drop-opt" data-owner-val="together">💕</button><button class="drop-opt" data-owner-val="unassigned">✪</button></div></div>
         </div>
 
       </div>

@@ -3,7 +3,197 @@
    - Toggle sections
    - Progress tracking (saved to localStorage)
    - Language switcher (ES / IT / EN)
+   - Owner assignment + filters
+   - Tooltips (hover on technical terms)
+   - Countdown widget to 15 Aug 2026
    ========================================= */
+
+// ---- TOOLTIP DEFINITIONS ----
+const TOOLTIPS = {
+  es: {
+    koopovereenkomst: "Contrato de compraventa — el documento legal que formaliza la compra entre vendedor y comprador.",
+    overdracht: "Transferencia — el momento en que la propiedad cambia oficialmente de manos en la notaría.",
+    financing_condition: "Condición de financiación — cláusula que permite cancelar la compra si no se obtiene la hipoteca.",
+    bouwdepot: "Depósito de obras — cuenta separada de la hipoteca reservada exclusivamente para financiar reformas.",
+    non_self_occupancy: "Cláusula de no residencia propia — el vendedor declara que no vive en la propiedad.",
+    age_clause: "Cláusula de antigüedad — limita la responsabilidad del vendedor por defectos en inmuebles viejos.",
+    asbestos_clause: "Cláusula de amianto — el comprador acepta el riesgo de posible presencia de asbesto.",
+    foundation_waiver: "Renuncia de garantía de cimientos — el comprador no puede reclamar por problemas estructurales.",
+    resale_restriction: "Restricción de reventa — puede impedir vender el piso por debajo de un precio o a ciertos compradores.",
+    fire_rated_ceiling: "Techo con resistencia al fuego — exigencia de construcción que puede limitar obras en el techo.",
+    splitsingstekening: "Plano de división — documento que muestra exactamente qué parte del edificio corresponde a cada propietario.",
+    eigenbewoning: "Ocupación propia — condición de que el propietario vive en la casa, necesaria para ciertos beneficios hipotecarios.",
+    source_of_funds: "Origen de los fondos — declaración obligatoria sobre de dónde proviene el dinero de la compra.",
+    pep_statement: "Declaración de persona políticamente expuesta — formulario antilavado de dinero.",
+    wwft: "Ley holandesa de prevención de blanqueo de capitales y financiación del terrorismo.",
+    kyc: "Know Your Customer — proceso de verificación de identidad exigido por las entidades financieras y notarías.",
+    nota_afrekening: "Liquidación final — documento del notario con el resumen exacto de lo que se transfiere el día de la firma.",
+    aktenpassage: "Firma de escrituras — el acto en la notaría donde se firma la transferencia oficial de la propiedad.",
+    erfpacht: "Derecho de superficie — no eres dueño del suelo, solo del edificio; pagas un canon anual al propietario del suelo.",
+    vve: "Vereniging van Eigenaren — comunidad de propietarios del edificio; gestiona el mantenimiento y toma decisiones colectivas.",
+    verduurzaming: "Sostenibilización — proyecto de mejora energética del edificio (aislamiento, paneles solares, etc.).",
+    derrama: "Cuota extraordinaria — pago único que la VvE puede exigir para obras mayores no cubiertas por el fondo de reserva.",
+    reserve_fund: "Fondo de reserva — dinero acumulado por la VvE para mantenimiento y reparaciones futuras del edificio.",
+    splitsingsreglement: "Reglamento de división — reglas legales sobre el uso de las partes comunes y privadas del edificio.",
+    huishoudelijk_reglement: "Reglamento interno — normas de convivencia: ruido, obras, mascotas, basura, etc.",
+    taxatie: "Tasación — valoración oficial del inmueble realizada por un perito, requerida para la hipoteca.",
+    bank_guarantee: "Aval bancario — garantía emitida por el banco que cubre el 10% del precio si no se puede completar la compra.",
+    waiver: "Renuncia a condición — documento que confirma que se levanta la condición de financiación y la compra sigue adelante.",
+    boiler: "Caldera de gas — sistema de calefacción central y agua caliente, muy común en los Países Bajos.",
+    meterstanden: "Lecturas de medidores — los valores exactos de gas, electricidad y agua en el momento de la entrega.",
+    mechanische_ventilatie: "Ventilación mecánica — sistema que extrae aire viciado de baño, toilet y cocina de forma automática.",
+    co_detector: "Detector de monóxido de carbono — alarma obligatoria cerca de la caldera que detecta este gas inodoro y letal.",
+    cilinderslot: "Cilindro de cerradura — la parte reemplazable de la cerradura; cambiarlos garantiza que nadie más tenga copia de la llave.",
+    beneden: "Planta baja / piso de abajo.",
+    woonkamer: "Salón / sala de estar.",
+    hal: "Recibidor / entrada.",
+    vlak_egaal: "Plano y nivelado — condición del suelo existente para instalar suelo flotante sin necesidad de nivelar.",
+    akoestiek_norm: "Norma acústica — nivel de aislamiento al impacto medido en decibelios, exigido por la VvE para suelos flotantes.",
+    fermacell: "Panel de construcción en seco de fibra de yeso; muy usado como subestructura para suelos con aislamiento acústico.",
+    underlay: "Capa amortiguadora bajo el suelo flotante que absorbe el ruido de impacto.",
+    multiplank: "Tarima de varios tablones por plancha, efecto más rústico/natural que las lamas estrechas.",
+    visgraat: "Patrón espiga / herringbone — colocación diagonal del suelo en forma de V.",
+    batchnummer: "Número de lote de producción — debe ser el mismo para todo el suelo para garantizar color e tono uniformes.",
+    marmerlook: "Imitación de mármol — cerámica con veteado de mármol, calidad y precio menores al mármol real.",
+    metod: "Sistema de cocina modular de IKEA, el más completo y personalizable del catálogo.",
+    backsplash: "Revestimiento de pared detrás de la encimera, protege contra salpicaduras.",
+    balkon: "Balcón.",
+    ventilatie: "Ventilación.",
+    single_phase: "Monofásico — tipo de instalación eléctrica estándar en viviendas; tiene limitaciones de potencia total.",
+    pladur: "Pladur / cartón-yeso — panel de yeso y cartón para construir tabiques ligeros, paredes y falsos techos.",
+    metal_studs: "Perfiles metálicos — estructura de acero galvanizado sobre la que se atornillan las placas de pladur.",
+    high_glass: "Cristal fijo o puerta acristalada en la parte superior de una pared, que deja pasar la luz sin perder privacidad.",
+    inloopkast: "Walk-in closet — armario vestidor sin puertas en el que se puede entrar.",
+    slaapkamer: "Dormitorio.",
+    ethernet: "Cable de red de datos de alta velocidad — más estable que el WiFi para trabajar desde casa.",
+    landskrona: "Sofá de IKEA con tapicería de tela, estilo clásico actualizado.",
+    gemeente: "Ayuntamiento / municipio — donde hay que registrarse al cambiar de domicilio en los Países Bajos.",
+    digid: "Identidad digital holandesa — login único para todos los servicios del gobierno online.",
+    bsn: "Número de identificación fiscal holandés (Burgerservicenummer) — equivalente al NIE/TIN.",
+  },
+  it: {
+    koopovereenkomst: "Contratto di compravendita — il documento legale che formalizza l'acquisto tra venditore e acquirente.",
+    overdracht: "Trasferimento — il momento in cui la proprietà cambia ufficialmente di mano presso il notaio.",
+    financing_condition: "Condizione di finanziamento — clausola che permette di annullare l'acquisto se il mutuo non viene ottenuto.",
+    bouwdepot: "Deposito lavori — conto separato dal mutuo riservato esclusivamente al finanziamento delle ristrutturazioni.",
+    non_self_occupancy: "Clausola di non residenza — il venditore dichiara di non abitare nell'immobile.",
+    age_clause: "Clausola di vecchiaia — limita la responsabilità del venditore per difetti in immobili di vecchia costruzione.",
+    asbestos_clause: "Clausola amianto — l'acquirente accetta il rischio di eventuale presenza di amianto.",
+    foundation_waiver: "Rinuncia alla garanzia delle fondamenta — l'acquirente non può rivalersi per problemi strutturali.",
+    resale_restriction: "Restrizione alla rivendita — può impedire di vendere sotto un certo prezzo o a certi acquirenti.",
+    fire_rated_ceiling: "Soffitto resistente al fuoco — requisito costruttivo che limita alcune opere.",
+    splitsingstekening: "Planimetria di divisione — documento che indica esattamente quale parte dell'edificio appartiene a ciascun proprietario.",
+    eigenbewoning: "Residenza principale — condizione necessaria per certi benefici fiscali del mutuo.",
+    source_of_funds: "Origine dei fondi — dichiarazione obbligatoria sulla provenienza del denaro dell'acquisto.",
+    pep_statement: "Dichiarazione persona politicamente esposta — modulo antiriciclaggio.",
+    wwft: "Legge olandese contro il riciclaggio di denaro e il finanziamento del terrorismo.",
+    kyc: "Know Your Customer — procedura di verifica identità richiesta da banche e notai.",
+    nota_afrekening: "Liquidazione finale — documento del notaio con il riepilogo esatto del trasferimento.",
+    aktenpassage: "Firma degli atti — l'atto dal notaio in cui si firma il trasferimento ufficiale della proprietà.",
+    erfpacht: "Diritto di superficie — non si è proprietari del terreno, solo dell'edificio; si paga un canone annuo.",
+    vve: "Vereiniging van Eigenaren — condominio; gestisce la manutenzione e le decisioni collettive.",
+    verduurzaming: "Efficientamento energetico — progetto di miglioramento energetico dell'edificio.",
+    derrama: "Quota straordinaria — pagamento unico che il condominio può richiedere per lavori straordinari.",
+    reserve_fund: "Fondo di riserva — denaro accumulato dal condominio per manutenzioni future.",
+    splitsingsreglement: "Regolamento di divisione — norme legali sull'uso delle parti comuni e private.",
+    huishoudelijk_reglement: "Regolamento interno — norme di convivenza: rumore, lavori, animali, rifiuti.",
+    taxatie: "Perizia — valutazione ufficiale dell'immobile richiesta per il mutuo.",
+    bank_guarantee: "Garanzia bancaria — garanzia emessa dalla banca che copre il 10% del prezzo.",
+    waiver: "Rinuncia alla condizione — documento che conferma che la condizione di finanziamento viene rimossa.",
+    boiler: "Caldaia a gas — sistema di riscaldamento centrale e acqua calda, molto comune in Olanda.",
+    meterstanden: "Letture dei contatori — i valori esatti di gas, elettricità e acqua al momento della consegna.",
+    mechanische_ventilatie: "Ventilazione meccanica — sistema che estrae l'aria viziata dal bagno, toilet e cucina.",
+    co_detector: "Rilevatore di monossido di carbonio — allarme vicino alla caldaia, obbligatorio per sicurezza.",
+    cilinderslot: "Cilindro della serratura — la parte sostituibile; cambiarla garantisce che nessun altro abbia copia delle chiavi.",
+    beneden: "Piano terra / piano inferiore.",
+    woonkamer: "Soggiorno.",
+    hal: "Ingresso / corridoio.",
+    vlak_egaal: "Piano e livellato — condizione del pavimento esistente per installare pavimento flottante.",
+    akoestiek_norm: "Norma acustica — livello di isolamento all'impatto in decibel, richiesto dal condominio.",
+    fermacell: "Pannello in fibra di gesso usato come sottostruttura per pavimenti con isolamento acustico.",
+    underlay: "Strato ammortizzante sotto il pavimento flottante che assorbe il rumore da impatto.",
+    multiplank: "Listoni multipli per asse, effetto più rustico/naturale.",
+    visgraat: "Pattern spina di pesce — posa diagonale del pavimento a forma di V.",
+    batchnummer: "Numero di lotto — deve essere lo stesso per tutto il pavimento per garantire colore uniforme.",
+    marmerlook: "Imitazione marmo — ceramica con venature di marmo.",
+    metod: "Sistema cucina modulare di IKEA, il più completo del catalogo.",
+    backsplash: "Rivestimento della parete dietro il piano cottura, protegge dagli schizzi.",
+    balkon: "Balcone.",
+    ventilatie: "Ventilazione.",
+    single_phase: "Monofase — tipo di impianto elettrico standard nelle abitazioni.",
+    pladur: "Cartongesso — pannello di gesso e cartone per costruire pareti leggere.",
+    metal_studs: "Profili metallici — struttura in acciaio su cui si avvitano i pannelli di cartongesso.",
+    high_glass: "Vetro fisso o porta vetrata nella parte superiore di una parete.",
+    inloopkast: "Cabina armadio — guardaroba in cui si può entrare.",
+    slaapkamer: "Camera da letto.",
+    ethernet: "Cavo di rete ad alta velocità — più stabile del WiFi per lavorare da casa.",
+    landskrona: "Divano IKEA con rivestimento in tessuto.",
+    gemeente: "Comune — dove bisogna registrarsi quando si cambia indirizzo in Olanda.",
+    digid: "Identità digitale olandese — accesso unico per tutti i servizi governativi online.",
+    bsn: "Numero di identificazione fiscale olandese (Burgerservicenummer).",
+  },
+  en: {
+    koopovereenkomst: "Purchase agreement — the legal document that formalises the sale between seller and buyer.",
+    overdracht: "Transfer — the moment the property officially changes hands at the notary.",
+    financing_condition: "Financing condition — clause allowing the purchase to be cancelled if the mortgage is not obtained.",
+    bouwdepot: "Construction deposit — a separate mortgage account reserved exclusively for financing renovation works.",
+    non_self_occupancy: "Non-self-occupancy clause — the seller declares they do not live in the property.",
+    age_clause: "Age clause — limits the seller's liability for defects in older properties.",
+    asbestos_clause: "Asbestos clause — the buyer accepts the risk of potential asbestos presence.",
+    foundation_waiver: "Foundation waiver — the buyer cannot claim for structural problems.",
+    resale_restriction: "Resale restriction — may prevent selling below a certain price or to certain buyers.",
+    fire_rated_ceiling: "Fire-rated ceiling — building requirement that may limit works on the ceiling.",
+    splitsingstekening: "Division drawing — document showing exactly which part of the building belongs to each owner.",
+    eigenbewoning: "Owner-occupancy — condition of living in the property, required for certain mortgage benefits.",
+    source_of_funds: "Source of funds — mandatory declaration of where the purchase money comes from.",
+    pep_statement: "Politically Exposed Person statement — anti-money laundering form.",
+    wwft: "Dutch anti-money laundering and counter-terrorism financing law.",
+    kyc: "Know Your Customer — identity verification process required by banks and notaries.",
+    nota_afrekening: "Final settlement — notary document with the exact summary of what is transferred on signing day.",
+    aktenpassage: "Deed signing — the act at the notary where the official transfer of property is signed.",
+    erfpacht: "Ground lease / leasehold — you own the building but not the land; you pay an annual ground rent.",
+    vve: "Owners' Association (Vereniging van Eigenaren) — the building's homeowners association; manages maintenance and collective decisions.",
+    verduurzaming: "Sustainability project — energy improvement of the building (insulation, solar panels, etc.).",
+    derrama: "Special levy — one-off payment the VvE can demand for major works not covered by the reserve fund.",
+    reserve_fund: "Reserve fund — money accumulated by the VvE for future building maintenance and repairs.",
+    splitsingsreglement: "Split regulations — legal rules on the use of common and private parts of the building.",
+    huishoudelijk_reglement: "House rules — coexistence norms: noise, works, pets, waste, etc.",
+    taxatie: "Appraisal / valuation — official property valuation by a certified appraiser, required for the mortgage.",
+    bank_guarantee: "Bank guarantee — guarantee issued by the bank covering 10% of the price if the purchase cannot be completed.",
+    waiver: "Condition waiver — document confirming the financing condition is lifted and the purchase proceeds.",
+    boiler: "Gas boiler — central heating and hot water system, very common in the Netherlands.",
+    meterstanden: "Meter readings — the exact gas, electricity and water readings at the moment of handover.",
+    mechanische_ventilatie: "Mechanical ventilation — system that automatically extracts stale air from bathroom, toilet and kitchen.",
+    co_detector: "Carbon monoxide detector — mandatory alarm near the boiler that detects this odourless, lethal gas.",
+    cilinderslot: "Lock cylinder — the replaceable part of the lock; changing it ensures no one else has a copy of the key.",
+    beneden: "Ground floor / downstairs.",
+    woonkamer: "Living room.",
+    hal: "Hallway / entrance.",
+    vlak_egaal: "Flat and level — condition of the existing floor to install floating flooring without levelling.",
+    akoestiek_norm: "Acoustic standard — impact insulation level in decibels, required by the VvE for floating floors.",
+    fermacell: "Fibre-gypsum board used as a substructure for floors with acoustic insulation.",
+    underlay: "Cushioning layer under floating flooring that absorbs impact noise.",
+    multiplank: "Multi-plank boards — effect more rustic/natural than narrow strips.",
+    visgraat: "Herringbone pattern — diagonal floor laying in a V shape.",
+    batchnummer: "Production lot number — must be the same for all flooring to ensure uniform colour and tone.",
+    marmerlook: "Marble look — ceramic tile with marble veining, lower quality and price than real marble.",
+    metod: "IKEA's most complete and customisable modular kitchen system.",
+    backsplash: "Wall cladding behind the countertop, protects against splashes.",
+    balkon: "Balcony.",
+    ventilatie: "Ventilation.",
+    single_phase: "Single-phase — standard residential electrical installation; has total power limitations.",
+    pladur: "Drywall / plasterboard — gypsum and cardboard panel for building light partitions and walls.",
+    metal_studs: "Metal profiles — galvanised steel frame onto which drywall boards are screwed.",
+    high_glass: "Fixed glass or glazed door in the upper part of a wall, letting in light without losing privacy.",
+    inloopkast: "Walk-in closet — open wardrobe room you can walk into.",
+    slaapkamer: "Bedroom.",
+    ethernet: "High-speed data cable — more stable than WiFi for working from home.",
+    landskrona: "IKEA sofa with fabric upholstery.",
+    gemeente: "Municipality — where you register when changing address in the Netherlands.",
+    digid: "Dutch digital identity — single login for all government online services.",
+    bsn: "Dutch tax/citizen identification number (Burgerservicenummer).",
+  }
+};
 
 // ---- TRANSLATIONS ----
 const TRANSLATIONS = {
@@ -28,7 +218,13 @@ const TRANSLATIONS = {
     s3sub1: "Informe técnico",
     s3sub2: "Reparaciones a pedir al vendedor",
     s3sub3: "Final inspection",
-    s3sub4: "Seguridad básica",
+    s3sub4: "Ventilación mecánica",
+    s3sub5: "Seguridad básica",
+    s4sub4: "Cocina — IKEA",
+    s4sub5: "Baño de arriba",
+    s4sub5b: "Baño / toilet de abajo",
+    s5sub3: "Oficina beneden (slaapkamer 1)",
+    s5sub5: "Balcón",
     s4title: "Remodelación inicial",
     s4desc: "Suelo, cocina, baño, pintura, pared acústica y referencias de estilo.",
     s4sub1: "Estrategia general",
@@ -128,7 +324,13 @@ const TRANSLATIONS = {
     s3sub1: "Rapporto tecnico",
     s3sub2: "Riparazioni da chiedere al venditore",
     s3sub3: "Ispezione finale",
-    s3sub4: "Sicurezza base",
+    s3sub4: "Ventilazione meccanica",
+    s3sub5: "Sicurezza base",
+    s4sub4: "Cucina — IKEA",
+    s4sub5: "Bagno di sopra",
+    s4sub5b: "Bagno / toilet di sotto",
+    s5sub3: "Ufficio piano terra (slaapkamer 1)",
+    s5sub5: "Balcone",
     s4title: "Ristrutturazione iniziale",
     s4desc: "Pavimento, cucina, bagno, pittura, parete acustica e riferimenti di stile.",
     s4sub1: "Strategia generale",
@@ -228,7 +430,13 @@ const TRANSLATIONS = {
     s3sub1: "Technical report",
     s3sub2: "Repairs to request from seller",
     s3sub3: "Final inspection",
-    s3sub4: "Basic safety",
+    s3sub4: "Mechanical ventilation",
+    s3sub5: "Basic safety",
+    s4sub4: "Kitchen — IKEA",
+    s4sub5: "Upstairs bathroom",
+    s4sub5b: "Downstairs bathroom / toilet",
+    s5sub3: "Ground floor office (slaapkamer 1)",
+    s5sub5: "Balcony",
     s4title: "Initial renovation",
     s4desc: "Floors, kitchen, bathroom, paint, acoustic wall and style references.",
     s4sub1: "General strategy",
@@ -312,6 +520,8 @@ const TRANSLATIONS = {
 // ---- STATE ----
 let currentLang = localStorage.getItem('zaan-lang') || 'es';
 let checkStates = JSON.parse(localStorage.getItem('zaan-checks') || '{}');
+let ownerOverrides = {};  // always start fresh — no saved owner assignments
+let activeFilters = new Set(['belen', 'filippo', 'together', 'unassigned']);
 
 // ---- INIT ----
 document.addEventListener('DOMContentLoaded', () => {
@@ -319,6 +529,9 @@ document.addEventListener('DOMContentLoaded', () => {
   restoreChecks();
   updateAllProgress();
   setActiveLangBtn(currentLang);
+  applyFilters();
+  initCountdown();
+  initTooltips();
 
   // Language buttons
   document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -339,7 +552,196 @@ document.addEventListener('DOMContentLoaded', () => {
       updateAllProgress();
     });
   });
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      if (activeFilters.has(f)) {
+        if (activeFilters.size > 1) {
+          activeFilters.delete(f);
+          btn.classList.remove('active');
+        }
+      } else {
+        activeFilters.add(f);
+        btn.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  // Owner badge dropdowns
+  document.addEventListener('click', (e) => {
+    const badge = e.target.closest('.owner-badge');
+    const dropOpt = e.target.closest('.drop-opt');
+    const wrap = e.target.closest('.owner-wrap');
+
+    if (dropOpt) {
+      const newOwner = dropOpt.dataset.ownerVal;
+      const taskItem = dropOpt.closest('.task-item');
+      taskItem.dataset.owner = newOwner;
+      const btn = taskItem.querySelector('.owner-badge');
+      btn.textContent = ownerEmoji(newOwner);
+      btn.title = ownerTitle(newOwner);
+      dropOpt.closest('.owner-wrap').classList.remove('open');
+      applyFilters();
+      return;
+    }
+
+    if (badge) {
+      const thisWrap = badge.closest('.owner-wrap');
+      document.querySelectorAll('.owner-wrap.open').forEach(w => {
+        if (w !== thisWrap) w.classList.remove('open');
+      });
+      thisWrap.classList.toggle('open');
+      return;
+    }
+
+    if (!wrap) {
+      document.querySelectorAll('.owner-wrap.open').forEach(w => w.classList.remove('open'));
+    }
+  });
+
+  // Copy button
+  document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
 });
+
+function ownerEmoji(owner) {
+  if (owner === 'belen') return '🧞‍♀️';
+  if (owner === 'filippo') return '🧞';
+  if (owner === 'together') return '💕';
+  return '✪';
+}
+
+function ownerTitle(owner) {
+  if (owner === 'belen') return 'Belén';
+  if (owner === 'filippo') return 'Filippo';
+  if (owner === 'together') return 'Juntos';
+  return 'Sin asignar';
+}
+
+// ---- FILTERS ----
+function applyFilters() {
+  document.querySelectorAll('.task-item').forEach(item => {
+    const owner = item.dataset.owner;
+    item.style.display = activeFilters.has(owner) ? '' : 'none';
+  });
+  updateAllProgress();
+}
+
+// ---- COUNTDOWN ----
+function initCountdown() {
+  const target = new Date('2026-08-15T00:00:00');
+  const start = new Date('2026-01-01T00:00:00');
+
+  function update() {
+    const now = new Date();
+    const totalDays = Math.round((target - start) / 86400000);
+    const remaining = Math.ceil((target - now) / 86400000);
+    const elapsed = totalDays - remaining;
+    const pct = Math.min(100, Math.max(0, Math.round((elapsed / totalDays) * 100)));
+
+    document.getElementById('cdDays').textContent = remaining > 0 ? remaining : 0;
+    document.getElementById('cdBar').style.width = pct + '%';
+  }
+
+  update();
+  setInterval(update, 60000);
+}
+
+// ---- TOOLTIPS ----
+function initTooltips() {
+  const popup = document.getElementById('tipPopup');
+  let hideTimer;
+
+  document.querySelectorAll('.tip').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      clearTimeout(hideTimer);
+      const key = el.dataset.tip;
+      const tips = TOOLTIPS[currentLang] || TOOLTIPS['es'];
+      const text = tips[key];
+      if (!text) return;
+      popup.textContent = text;
+      popup.classList.add('visible');
+      positionPopup(e);
+    });
+
+    el.addEventListener('mousemove', positionPopup);
+
+    el.addEventListener('mouseleave', () => {
+      hideTimer = setTimeout(() => popup.classList.remove('visible'), 120);
+    });
+  });
+
+  function positionPopup(e) {
+    const x = e.clientX + 14;
+    const y = e.clientY + 14;
+    const pw = popup.offsetWidth || 240;
+    const ph = popup.offsetHeight || 60;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    popup.style.left = (x + pw > vw - 8 ? x - pw - 20 : x) + 'px';
+    popup.style.top  = (y + ph > vh - 8 ? y - ph - 20 : y) + 'px';
+  }
+}
+
+
+// ---- COPY TO CLIPBOARD ----
+function copyToClipboard() {
+  const sections = document.querySelectorAll('.task-section');
+  const lines = ['🏠 *Zaanstraat 314 · Tareas*', ''];
+
+  sections.forEach(section => {
+    const visibleTasks = Array.from(section.querySelectorAll('.task-item'))
+      .filter(item => item.style.display !== 'none');
+
+    if (visibleTasks.length === 0) return;
+
+    const title = section.querySelector('.section-title').textContent.trim();
+    const num = section.querySelector('.section-num')?.textContent.trim() || '';
+    lines.push(`*${num} ${title}*`);
+
+    visibleTasks.forEach(item => {
+      const checked = item.querySelector('.task-check').checked;
+      const text = item.querySelector('.task-text').textContent.trim();
+      const owner = item.dataset.owner;
+      const emoji = ownerEmoji(owner);
+      const mark = checked ? '[x]' : '[ ]';
+      lines.push(`${mark} ${emoji} ${text}`);
+    });
+
+    lines.push('');
+  });
+
+  const text = lines.join('\n').trim();
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    // Fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
 
 // ---- TOGGLE SECTION ----
 function toggleSection(id) {

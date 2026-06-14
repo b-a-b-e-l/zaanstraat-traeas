@@ -364,7 +364,11 @@ body {
   padding-left: 0.75rem;
 }
 .task-item[data-owner="together"] {
-  border-left: 2px solid var(--together);
+  border-left: 2px solid #E8A0B4;
+  padding-left: 0.75rem;
+}
+.task-item[data-owner="unassigned"] {
+  border-left: 2px solid rgba(44,43,39,0.15);
   padding-left: 0.75rem;
 }
 
@@ -397,11 +401,117 @@ body {
   color: var(--ink-light);
 }
 
-.owner-badge {
-  font-size: 1rem;
+/* ---- OWNER DROPDOWN ---- */
+.owner-wrap {
+  position: relative;
   flex-shrink: 0;
-  padding-top: 0.1rem;
+}
+
+.owner-badge {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  padding: 0.1rem 0.25rem;
   opacity: 0.85;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background var(--transition), transform 0.15s ease;
+  line-height: 1;
+  display: block;
+}
+
+.owner-badge:hover {
+  background: rgba(44,43,39,0.08);
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.owner-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 4px 18px rgba(44,43,39,0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.85) translateY(-4px);
+  transform-origin: top right;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.owner-wrap.open .owner-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+.drop-opt {
+  font-size: 1.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, transform 0.1s ease;
+  line-height: 1;
+}
+
+.drop-opt:hover {
+  background: var(--cream-dark);
+  transform: scale(1.12);
+}
+
+/* ---- FILTER BUTTONS ---- */
+.filter-btn {
+  cursor: pointer;
+  border: none;
+  transition: opacity var(--transition), transform 0.15s ease;
+}
+
+.filter-btn:not(.active) {
+  opacity: 0.35;
+}
+
+.filter-btn.active {
+  opacity: 1;
+}
+
+/* ---- COPY BUTTON ---- */
+.copy-btn {
+  background: rgba(155,142,196,0.2);
+  border: 1px solid rgba(155,142,196,0.4);
+  color: var(--lila-light);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.copy-btn:hover {
+  background: var(--lila);
+  color: var(--cream);
+}
+
+.copy-btn.copied {
+  background: var(--sage);
+  color: var(--cream);
+  border-color: var(--sage);
 }
 
 /* Pinterest hint */
@@ -410,7 +520,108 @@ body {
   font-weight: 500;
 }
 
-/* ---- FOOTER ---- */
+/* ---- COUNTDOWN WIDGET ---- */
+.countdown-widget {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  min-width: 110px;
+  text-align: center;
+  z-index: 200;
+  box-shadow: 0 6px 24px rgba(44,43,39,0.25);
+  border: 1px solid rgba(244,240,230,0.1);
+  cursor: default;
+  user-select: none;
+}
+
+.cd-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  margin-bottom: 0.3rem;
+}
+
+.cd-days {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--cream);
+}
+
+.cd-sublabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(244,240,230,0.4);
+  margin-bottom: 0.6rem;
+}
+
+.cd-bar-track {
+  height: 2px;
+  background: rgba(244,240,230,0.12);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.cd-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sage-light), var(--lila-light));
+  border-radius: 1px;
+  transition: width 1s ease;
+}
+
+.cd-date {
+  font-size: 0.62rem;
+  color: rgba(244,240,230,0.35);
+  letter-spacing: 0.04em;
+}
+
+/* ---- TOOLTIP ---- */
+.tip {
+  border-bottom: 1px dashed var(--ink-light);
+  cursor: help;
+  white-space: nowrap;
+}
+
+.tip-popup {
+  position: fixed;
+  z-index: 999;
+  background: var(--ink);
+  color: var(--cream);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  max-width: 260px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  box-shadow: 0 4px 16px rgba(44,43,39,0.2);
+}
+
+.tip-popup.visible {
+  opacity: 1;
+}
+
+/* ---- BADGE SIN ASIGNAR ---- */
+.badge-unassigned {
+  background: rgba(44,43,39,0.08);
+  color: var(--ink-light);
+  border: 1px solid rgba(44,43,39,0.15);
+}
+
+/* ---- TASK REMINDER STYLE ---- */
+.task-item--reminder .task-text {
+  color: var(--ink-light);
+  font-style: italic;
+}
 .site-footer {
   background: var(--ink);
   color: rgba(244,240,230,0.5);
